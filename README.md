@@ -1,2 +1,3 @@
-# dsa
-project 2 🎧
+What Is My Next Game?
+
+Nowadays, hundreds of games are released daily. Being faced with endless choices arises the challenge of choosing which one you should play next. This choice takes a lot of consideration as gamers have different game genres they enjoy, consoles they own, and certain publishers they prefer. Instead, we have created a program that takes these factors into consideration and returns the user with a list of recently released games that fits their criteria. For example, based on the number of recommendations the user asks for, the program will return that number of games (that also aligns with other factors such as the genre, playstyle, etc) to the user! 
