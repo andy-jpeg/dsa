@@ -1,0 +1,165 @@
+"C:\Program Files\JetBrains\CLion 2025.3.1.1\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/msys64/mingw64/bin/make.exe -G "MinGW Makefiles" -S C:\Users\sarae\OneDrive\Documents\GitHub\dsa -B C:\Users\sarae\OneDrive\Documents\GitHub\dsa\cmake-build-debug
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Found OpenGL: opengl32  found components: OpenGL
+-- Looking for C++ include dinput.h
+-- Looking for C++ include dinput.h - found
+-- Performing Test ATOMIC_TEST
+-- Performing Test ATOMIC_TEST - Success
+-- Found Python3: C:/Program Files/Python312/python.exe (found version "3.12.4") found components: Interpreter
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS - Success
+-- USING O3
+-- Using CMake version 4.1.2
+-- CMake platform flags: WIN32 GCC MINGW
+-- Picky compiler options: -W -Wall -pedantic -Wbad-function-cast -Wconversion -Winline -Wmissing-declarations -Wmissing-prototypes -Wnested-externs -Wno-long-long -Wno-multichar -Wpointer-arith -Wshadow -Wsign-compare -Wundef -Wunused -Wwrite-strings -Waddress -Wattributes -Wcast-align -Wcast-qual -Wdeclaration-after-statement -Wdiv-by-zero -Wempty-body -Wendif-labels -Wfloat-equal -Wformat-security -Wignored-qualifiers -Wmissing-field-initializers -Wmissing-noreturn -Wno-format-nonliteral -Wno-system-headers -Wold-style-definition -Wredundant-decls -Wsign-conversion -Wno-error=sign-conversion -Wstrict-prototypes -Wtype-limits -Wunreachable-code -Wunused-macros -Wunused-parameter -Wvla -Wclobbered -Wmissing-parameter-type -Wold-style-declaration -Wpragmas -Wstrict-aliasing=3 -ftree-vrp -Wjump-misses-init -Wno-pedantic-ms-format -Wdouble-promotion -Wformat=2 -Wtrampolines -Warray-bounds=2 -Wduplicated-cond -Wnull-dereference -fdelete-null-pointer-checks -Wshift-negative-value -Wshift-overflow=2 -Wunused-const-variable -Walloc-zero -Wduplicated-branches -Wformat-overflow=2 -Wformat-truncation=2 -Wimplicit-fallthrough -Wrestrict -Warith-conversion -Wenum-conversion -Warray-compare -Wenum-int-mismatch -Wxor-used-as-pow
+-- The following features have been enabled:
+
+ * Static library, creating libssh2 static library
+ * Logging, Logging of execution with debug trace
+ * Without deprecated APIs
+ * Crypto backend, mbedTLS
+
+-- The following OPTIONAL packages have been found:
+
+ * Python3
+
+-- The following REQUIRED packages have been found:
+
+ * OpenGL
+ * Threads
+ * MbedTLS
+
+-- The following features have been disabled:
+
+ * Shared library, creating libssh2 shared library (.so/.dll)
+ * Compression, using zlib for compression
+ * Docs, build docs
+
+Cloning into 'freetype-src'...
+HEAD is now at 0a0221a1 * Version 2.14.3 released. ==========================
+Submodule 'dlg' (https://github.com/nyorain/dlg.git) registered for path 'subprojects/dlg'
+Cloning into 'C:/Users/sarae/OneDrive/Documents/GitHub/dsa/cmake-build-debug/_deps/freetype-src/subprojects/dlg'...
+Submodule path 'subprojects/dlg': checked out '395ccad2c1e0daae535c4d20bb0a3f2424648e17'
+-- Found PkgConfig: C:/msys64/mingw64/bin/pkg-config.exe (found version "2.5.1")
+Cloning into 'harfbuzz-src'...
+HEAD is now at cfb70b0b 14.1.0
+-- Looking for atexit
+-- Looking for atexit - found
+-- Looking for mprotect
+-- Looking for mprotect - found
+-- Looking for sysconf
+-- Looking for sysconf - not found
+-- Looking for getpagesize
+-- Looking for getpagesize - found
+-- Looking for mmap
+-- Looking for mmap - not found
+-- Looking for isatty
+-- Looking for isatty - found
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Looking for sys/mman.h
+-- Looking for sys/mman.h - not found
+-- Looking for stdbool.h
+-- Looking for stdbool.h - found
+-- Performing Test CXX_SUPPORTS_FLAG_BSYMB_FUNCS
+-- Performing Test CXX_SUPPORTS_FLAG_BSYMB_FUNCS - Success
+-- Performing Test COMPILER_SUPPORTS_CXX11
+-- Performing Test COMPILER_SUPPORTS_CXX11 - Success
+Cloning into 'sheenbidi-src'...
+HEAD is now at cfe430e [lib] Update library version
+Cloning into 'ogg-src'...
+HEAD is now at be05b13 Set release date for 1.3.6
+-- Configuring ogg 1.3.6
+-- Looking for include file inttypes.h
+-- Looking for include file inttypes.h - found
+-- Looking for include file stdint.h
+-- Looking for include file stdint.h - found
+-- Looking for include file sys/types.h
+-- Looking for include file sys/types.h - found
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of int16_t
+-- Check size of int16_t - done
+-- Check size of uint16_t
+-- Check size of uint16_t - done
+-- Check size of u_int16_t
+-- Check size of u_int16_t - failed
+-- Check size of int32_t
+-- Check size of int32_t - done
+-- Check size of uint32_t
+-- Check size of uint32_t - done
+-- Check size of u_int32_t
+-- Check size of u_int32_t - failed
+-- Check size of int64_t
+-- Check size of int64_t - done
+-- Check size of short
+-- Check size of short - done
+-- Check size of int
+-- Check size of int - done
+-- Check size of long
+-- Check size of long - done
+-- Check size of long long
+-- Check size of long long - done
+Cloning into 'flac-src'...
+HEAD is now at 1507800 Release FLAC 1.5.0 (#801)
+-- Performing Test HAVE_MBSTATE
+-- Performing Test HAVE_MBSTATE - Success
+-- Performing Test DODEFINE_EXTENSIONS
+-- Performing Test DODEFINE_EXTENSIONS - Success
+-- Looking for byteswap.h
+-- Looking for byteswap.h - not found
+-- Looking for inttypes.h
+-- Looking for inttypes.h - found
+-- Looking for arm_neon.h
+-- Looking for arm_neon.h - not found
+-- Looking for x86intrin.h
+-- Looking for x86intrin.h - found
+-- Looking for fseeko
+-- Looking for fseeko - found
+-- Performing Test HAVE_BSWAP16
+-- Performing Test HAVE_BSWAP16 - Success
+-- Performing Test HAVE_BSWAP32
+-- Performing Test HAVE_BSWAP32 - Success
+-- Performing Test HAVE_LANGINFO_CODESET
+-- Performing Test HAVE_LANGINFO_CODESET - Failed
+-- Performing Test HAVE_WERROR_FLAG
+-- Performing Test HAVE_WERROR_FLAG - Success
+-- Performing Test HAVE_DECL_AFTER_STMT_FLAG
+-- Performing Test HAVE_DECL_AFTER_STMT_FLAG - Success
+-- Performing Test HAVE_STACKREALIGN_FLAG
+-- Performing Test HAVE_STACKREALIGN_FLAG - Success
+-- Performing Test HAVE_WEFFCXX_FLAG
+-- Performing Test HAVE_WEFFCXX_FLAG - Success
+-- Looking for cpuid.h
+-- Looking for cpuid.h - found
+-- Looking for sys/param.h
+-- Looking for sys/param.h - found
+-- Looking for lround
+-- Looking for lround - found
+-- Check CPU architecture is x64
+-- Check CPU architecture is x64 - yes
+-- Performing Test HAVE_ASSOC_MATH
+-- Performing Test HAVE_ASSOC_MATH - Success
+Cloning into 'vorbis-src'...
+HEAD is now at 0657aee Add vorbis dependencies when building examples.
+-- Configuring vorbis 1.3.7
+-- Looking for floor in m
+-- Looking for floor in m - found
+-- Configuring done (226.8s)
+CMake Error at CMakeLists.txt:16 (add_executable):
+  Cannot find source file:
+
+    src/main.cpp
+
+
+CMake Error at CMakeLists.txt:16 (add_executable):
+  No SOURCES given to target: dsa
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.

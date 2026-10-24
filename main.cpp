@@ -1,3 +1,7 @@
-//
-// Created by sarae on 10/23/2026.
-//
+#include <iostream>
+using namespace std;
+
+int main () {
+
+    return 0;
+}
