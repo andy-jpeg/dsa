@@ -1,9 +1,12 @@
 #ifndef DSA_HEAP_H
 #define DSA_HEAP_H
-// my added includes 
+
+// my includes:
 #include <vector>
 #include <algorithm>
 #include <string>
+
+// namespace <3
 using namespace std;
 
 // making games class
@@ -15,42 +18,42 @@ private:
 	int recommendations;
 
 	// one iterm strings
-	std::string title;
-	std::string developer;
-	std::string publisher;
+	string title;
+	string developer;
+	string publisher;
 
 	// multiple adjectives 
-	std::vector<std::string> genres;
-	std::vector<std::string> catagories;
+	vector<string> genres;
+	vector<string> categories;
 
 public:
 	// constructors: 
 	game();
-	game(int appid, double price, int recommendations, const std::string& title, const std::string& developer, const std::string& publisher, const std::vector<std::string>& genres, const std::vector<std::string>& catagories);
+	game(int appid, double price, int recommendations, const string& title, const string& developer, const string& publisher, const vector<string>& genres, const vector<string>& categories);
 
 	// getting numbers: 
 	int get_appid() const;
 	double get_price() const;
-	int get_recomendations() const;
+	int get_recommendations() const;
 
 	// getting one iterm strings
-	std::string get_title() const;
-	std::string get_developer() const;
-	std::string get_publisher() const;
+	string get_title() const;
+	string get_developer() const;
+	string get_publisher() const;
 
 	// getting multiple adjectives 
-	std::vector<std::string> get_genres() const;
-	std::vector<std::string> get_catagories() const;
+	vector<string> get_genres() const;
+	vector<string> get_categories() const;
 };
 
 // making max heap
 class maxHeap {
 private:
-	std::vector<game> heap;
+	vector<game> heap;
 
 	// nodes:
 	int parent(int index);
-	int right(int index);  // these are right/left children i just dont want to write kid
+	int right(int index);
 	int left(int index);
 
 	// sorting the heap
@@ -77,12 +80,13 @@ private:
 
 	// nodes:
 	int parent(int index);
-	int right(int index); // these are right/left children i just dont want to write kid
+	int right(int index);
 	int left(int index);
 
 	// sorting the heap
 	void heapUp(int index);
 	void heapDown(int index);
+
 public:
 	//constructors: 
 	minHeap();
@@ -93,7 +97,6 @@ public:
 	game top();
 	bool empty();
 	int size();
-
 };
 
-#endif //DSA_HEAP_H#pragma once
+#endif //DSA_HEAP_H
