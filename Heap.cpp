@@ -1,5 +1,5 @@
 // adding header
-#include "Heap.h"
+#include "heap.h"
 
 
 /////////////////////// games ////////////////////////////// 
@@ -8,21 +8,21 @@ game::game() {
 	appid = 0;
 	price = 0.0;
 	recommendations = 0;
+    releaseYear = 0;
 	title = "";
 	developer = "";
 	publisher = "";
-    releaseDate = "";
 };
 
 // other cases
-game::game(int appid, double price, int recommendations, const string& title, const string& developer, const string& publisher, const string& releaseDate, const vector<string>& genres, const vector<string>& categories) {
+game::game(int appid, double price, int recommendations, int releaseYear, const string& title, const string& developer, const string& publisher, const vector<string>& genres, const vector<string>& categories) {
 	this->appid = appid;
 	this->price = price;
 	this->recommendations = recommendations;
+    this->releaseYear = releaseYear;
 	this->title = title;
 	this->developer = developer;
 	this->publisher = publisher;
-    this->releaseDate = releaseDate;
 	this->genres = genres;
 	this->categories = categories;
 };
@@ -38,7 +38,10 @@ double game::get_price() const {
 
 int game::get_recommendations() const {
 	return recommendations;
+};
 
+int game::get_releaseYear() const {
+    return releaseYear;
 };
 
 
@@ -55,10 +58,6 @@ string game::get_publisher() const {
 	return publisher;
 };
 
-string game::get_releaseDate() const {
-    return releaseDate;
-};
-
 
 //// getting multiple adjectives 
 vector<string> game::get_genres() const {
@@ -72,6 +71,10 @@ vector<string> game::get_categories() const {
 
 /////////////////////// max heap ////////////////////////////// 
 //// making max heap
+maxHeap::maxHeap() {
+    infoNeeded = "recommendations";
+};
+
 maxHeap::maxHeap(string infoNeeded) {
     heap = vector<game>();
 
@@ -79,6 +82,7 @@ maxHeap::maxHeap(string infoNeeded) {
 };
 
 //// nodes:
+// parent 
 int maxHeap::parent(int index) {
     return (index - 1) / 2;
 };
@@ -154,8 +158,13 @@ void maxHeap::insert(game newGame) {
     heapUp(heap.size() - 1);
 };
 
-// getting highest val then taking it out
+// getting highest val -> taking it out
 game maxHeap::extractMax() {
+    // making sure values exist:
+    if (heap.empty()) {
+        return game();
+    }
+
     // getting max value from heap
     game maxGame = heap[0];
 
@@ -284,8 +293,12 @@ void minHeap::insert(game newGame) {
     heapUp(heap.size() - 1);
 };
 
-// getting top val then removing after 
+// getting top val -> remove after 
 game minHeap::extractMin() {
+    // making sure values exist:
+    if (heap.empty()) {
+        return game();
+    }
     // getting max value from heap
     game minGame = heap[0];
 
@@ -293,9 +306,6 @@ game minHeap::extractMin() {
     heap.pop_back();
     if (!heap.empty()) {
         heapDown(0);
-    }
-    else if (heap.empty()) {
-        return game();
     }
 
     return minGame;
@@ -331,6 +341,32 @@ double minHeap::getInfo(game currentGame) {
 
 
 /////////////////////// data heaps ////////////////////////////// 
+// creating a filter of all of the games, if they are matching what they want it will go in the new list:
+vector<game> gameData::filterGames(string publisher, string genre, string category, double maxPrice) {
+    // creating a vector for the games that fit
+    vector<game> matchingGames;
+
+    for (const game& currentGame:allGames) {
+        // if has all things: 
+        if (!publisher.empty() && currentGame.get_publisher() != publisher) {
+            continue;
+        }
+        if (currentGame.get_price() > maxPrice) {
+            continue;
+        }
+        vector<string> genres = currentGame.get_genres();
+        if (!genre.empty() && find(genres.begin(), genres.end(), genre) == genres.end()) {
+            continue;
+        }
+        vector<string> categories = currentGame.get_categories();
+        if (!category.empty() && find(categories.begin(), categories.end(), category) == categories.end()) {
+            continue;
+        }
+        matchingGames.push_back(currentGame);
+    }
+    return matchingGames;
+};
+
 // adding new games to the heaps/ with correct data 
 void gameData::addGame(game newGame) {
     // adding game to the list of all games:
@@ -363,11 +399,14 @@ void gameData::addGame(game newGame) {
 
     //// category heaps
     for (string category : newGame.get_categories()) {
-
         if (categoryHeaps.find(category) == categoryHeaps.end()) {
             maxHeap newHeap("recommendations");
-            categoryHeaps.insert({ category, newHeap });
+            categoryHeaps.insert({category, newHeap});
         }
         categoryHeaps[category].insert(newGame);
     }
 };
+
+/////////////////////// getting data ////////////////////////////// 
+// grabbing data from csv and putting it into vectors without extras
+// get rid of ;
