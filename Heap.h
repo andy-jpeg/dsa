@@ -6,6 +6,9 @@
 #include <algorithm>
 #include <string>
 #include <unordered_map>
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
 
 // namespace <3
 using namespace std;
@@ -18,12 +21,12 @@ private:
 	int appid;
 	double price;
 	int recommendations;
+	int releaseYear;
 
 	// one iterm strings
 	string title;
 	string developer;
 	string publisher;
-	string releaseDate;
 
 	// multiple adjectives 
 	vector<string> genres;
@@ -32,18 +35,18 @@ private:
 public:
 	// constructors: 
 	game();
-	game(int appid, double price, int recommendations, const string& title, const string& developer, const string& publisher, const string& releaseDate,  const vector<string>& genres, const vector<string>& categories);
+	game(int appid, double price, int recommendations, int releaseYear, const string& title, const string& developer, const string& publisher, const vector<string>& genres, const vector<string>& categories);
 
 	// getting numbers: 
 	int get_appid() const;
 	double get_price() const;
 	int get_recommendations() const;
+	int get_releaseYear() const;
 
 	// getting one iterm strings
 	string get_title() const;
 	string get_developer() const;
 	string get_publisher() const;
-	string get_releaseDate() const;
 
 	// getting multiple adjectives 
 	vector<string> get_genres() const;
@@ -70,7 +73,8 @@ private:
 
 public:
 	//constructors: 
-	maxHeap(string infoNeeded = "recommendations");
+	maxHeap();
+	maxHeap(string infoNeeded);
 
 	// funcs:
 	void insert(game newGame);
@@ -102,7 +106,7 @@ private:
 
 public:
 	//constructors: 
-	minHeap(string infoNeeded = "recommendations");
+	minHeap(string infoNeeded);
 
 	// funcs:
 	void insert(game newGame);
@@ -130,6 +134,18 @@ private:
 public:
 	// adding new games to the heaps
 	void addGame(game newGame);
+
+	// starts with all games, then it filters based on if it fits what they want 
+	vector<game> filterGames(string publisher, string genre, string category, double maxPrice);
+};
+
+
+/////////////////////// getting data ////////////////////////////// 
+// grabbing data from csv and putting it into vectors without extras
+class CSVReader {
+public:
+	vector<string> split(string text, char delimiter);
+	void loadCSV(string fileName, gameData& database);
 };
 
 
