@@ -5,10 +5,12 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <unordered_map>
 
 // namespace <3
 using namespace std;
 
+/////////////////////// games ////////////////////////////// 
 // making games class
 class game {
 private:
@@ -21,6 +23,7 @@ private:
 	string title;
 	string developer;
 	string publisher;
+	string releaseDate;
 
 	// multiple adjectives 
 	vector<string> genres;
@@ -29,7 +32,7 @@ private:
 public:
 	// constructors: 
 	game();
-	game(int appid, double price, int recommendations, const string& title, const string& developer, const string& publisher, const vector<string>& genres, const vector<string>& categories);
+	game(int appid, double price, int recommendations, const string& title, const string& developer, const string& publisher, const string& releaseDate,  const vector<string>& genres, const vector<string>& categories);
 
 	// getting numbers: 
 	int get_appid() const;
@@ -40,12 +43,14 @@ public:
 	string get_title() const;
 	string get_developer() const;
 	string get_publisher() const;
+	string get_releaseDate() const;
 
 	// getting multiple adjectives 
 	vector<string> get_genres() const;
 	vector<string> get_categories() const;
 };
 
+/////////////////////// max heap ////////////////////////////// 
 // making max heap
 class maxHeap {
 private:
@@ -56,13 +61,16 @@ private:
 	int right(int index);
 	int left(int index);
 
+	// chosing what type of data want to make a heap out of 
+	string infoNeeded;
+
 	// sorting the heap
 	void heapUp(int index);
 	void heapDown(int index);
 
 public:
 	//constructors: 
-	maxHeap();
+	maxHeap(string infoNeeded);
 
 	// funcs:
 	void insert(game newGame);
@@ -70,18 +78,23 @@ public:
 	game top();
 	bool empty();
 	int size();
+	double getInfo(game currentGame);
 
 };
 
+/////////////////////// min heap ////////////////////////////// 
 // making min heap 
 class minHeap {
 private:
-	std::vector<game> heap;
+	vector<game> heap;
 
 	// nodes:
 	int parent(int index);
 	int right(int index);
 	int left(int index);
+
+	// chosing what type of data want to make a heap out of 
+	string infoNeeded;
 
 	// sorting the heap
 	void heapUp(int index);
@@ -89,7 +102,7 @@ private:
 
 public:
 	//constructors: 
-	minHeap();
+	minHeap(string infoNeeded);
 
 	// funcs:
 	void insert(game newGame);
@@ -97,6 +110,27 @@ public:
 	game top();
 	bool empty();
 	int size();
+	double getInfo(game currentGame);
+
 };
+
+/////////////////////// data heaps ////////////////////////////// 
+// making heaps for all of the dif data types
+class gameData {
+private:
+	// all of the games
+	vector<game> allGames;
+
+	// heaps for each cataporgy 
+	unordered_map<string, maxHeap> genreHeaps;
+	unordered_map<string, maxHeap> developerHeaps;
+	unordered_map<string, maxHeap> publisherHeaps;
+	unordered_map<string, maxHeap> categoryHeaps;
+
+public:
+	// adding new games to the heaps
+	void addGame(game newGame);
+};
+
 
 #endif //DSA_HEAP_H
