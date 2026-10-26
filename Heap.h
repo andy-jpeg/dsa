@@ -70,7 +70,7 @@ private:
 
 public:
 	//constructors: 
-	maxHeap(string infoNeeded);
+	maxHeap(string infoNeeded = "recommendations");
 
 	// funcs:
 	void insert(game newGame);
@@ -102,7 +102,7 @@ private:
 
 public:
 	//constructors: 
-	minHeap(string infoNeeded);
+	minHeap(string infoNeeded = "recommendations");
 
 	// funcs:
 	void insert(game newGame);

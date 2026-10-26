@@ -154,7 +154,7 @@ void maxHeap::insert(game newGame) {
     heapUp(heap.size() - 1);
 };
 
-// getting highest val -> taking it out
+// getting highest val then taking it out
 game maxHeap::extractMax() {
     // getting max value from heap
     game maxGame = heap[0];
@@ -284,7 +284,7 @@ void minHeap::insert(game newGame) {
     heapUp(heap.size() - 1);
 };
 
-// getting top val -> remove after 
+// getting top val then removing after 
 game minHeap::extractMin() {
     // getting max value from heap
     game minGame = heap[0];
