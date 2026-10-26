@@ -46,7 +46,7 @@ public:
 // making max heap
 class maxHeap {
 private:
-	std::vector<game*> heap;
+	std::vector<game> heap;
 
 	// nodes:
 	int parent(int index);
@@ -73,7 +73,7 @@ public:
 // making min heap 
 class minHeap {
 private:
-	std::vector<game*> heap;
+	std::vector<game> heap;
 
 	// nodes:
 	int parent(int index);
