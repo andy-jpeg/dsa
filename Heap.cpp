@@ -1,77 +1,16 @@
 // adding header
-#include "Heap.h"
-
-
-/////////////////////// games ////////////////////////////// 
-// base case
-game::game() {
-	appid = 0;
-	price = 0.0;
-	recommendations = 0;
-	title = "";
-	developer = "";
-	publisher = "";
-    releaseDate = "";
-};
-
-// other cases
-game::game(int appid, double price, int recommendations, const string& title, const string& developer, const string& publisher, const string& releaseDate, const vector<string>& genres, const vector<string>& categories) {
-	this->appid = appid;
-	this->price = price;
-	this->recommendations = recommendations;
-	this->title = title;
-	this->developer = developer;
-	this->publisher = publisher;
-    this->releaseDate = releaseDate;
-	this->genres = genres;
-	this->categories = categories;
-};
-
-//// getting numbers: 
-int game::get_appid() const {
-	return appid;
-};
-
-double game::get_price() const {
-	return price;
-};
-
-int game::get_recommendations() const {
-	return recommendations;
-
-};
-
-
-//// getting one iterm strings
-string game::get_title() const {
-	return title;
-};
-
-string game::get_developer() const {
-	return developer;
-};
-
-string game::get_publisher() const {
-	return publisher;
-};
-
-string game::get_releaseDate() const {
-    return releaseDate;
-};
-
-
-//// getting multiple adjectives 
-vector<string> game::get_genres() const {
-	return genres;
-};
-
-vector<string> game::get_categories() const {
-	return categories;
-};
+#include "heap.h"
+#include "gameinfo.h"
 
 
 /////////////////////// max heap ////////////////////////////// 
 //// making max heap
+//having = recomendations gives it something to sort by inside of each heap catagory 
+maxHeap::maxHeap() {
+    infoNeeded = "recommendations";
+};
+
+// if already has something to sort by 
 maxHeap::maxHeap(string infoNeeded) {
     heap = vector<game>();
 
@@ -79,6 +18,7 @@ maxHeap::maxHeap(string infoNeeded) {
 };
 
 //// nodes:
+// parent 
 int maxHeap::parent(int index) {
     return (index - 1) / 2;
 };
@@ -95,7 +35,7 @@ int maxHeap::right(int index) {
 
 
 //// sorting the heap:
-// when added to bottom left leaf:
+// when added to bottom left leaf: heapify
 void maxHeap::heapUp(int index) {
     while (index > 0) {
         int parIndex = parent(index);
@@ -118,7 +58,7 @@ void maxHeap::heapUp(int index) {
     }
 };
 
-// when removing top ele: 
+// when removing top ele: heapify
 void maxHeap::heapDown(int index) {
     // big val
     int largest = index;
@@ -154,8 +94,13 @@ void maxHeap::insert(game newGame) {
     heapUp(heap.size() - 1);
 };
 
-// getting highest val then taking it out
+// getting highest val -> taking it out
 game maxHeap::extractMax() {
+    // making sure values exist:
+    if (heap.empty()) {
+        return game();
+    }
+
     // getting max value from heap
     game maxGame = heap[0];
 
@@ -186,6 +131,7 @@ int maxHeap::size() {
     return heap.size();
 };
 
+// getting the type of info that you are sorting by 
 double maxHeap::getInfo(game currentGame) {
     if (infoNeeded == "recommendations") {
         return currentGame.get_recommendations();
@@ -284,8 +230,12 @@ void minHeap::insert(game newGame) {
     heapUp(heap.size() - 1);
 };
 
-// getting top val then removing after 
+// getting top val -> remove after 
 game minHeap::extractMin() {
+    // making sure values exist:
+    if (heap.empty()) {
+        return game();
+    }
     // getting max value from heap
     game minGame = heap[0];
 
@@ -293,9 +243,6 @@ game minHeap::extractMin() {
     heap.pop_back();
     if (!heap.empty()) {
         heapDown(0);
-    }
-    else if (heap.empty()) {
-        return game();
     }
 
     return minGame;
@@ -327,47 +274,4 @@ double minHeap::getInfo(game currentGame) {
         return currentGame.get_price();
     }
     return 0;
-};
-
-
-/////////////////////// data heaps ////////////////////////////// 
-// adding new games to the heaps/ with correct data 
-void gameData::addGame(game newGame) {
-    // adding game to the list of all games:
-    allGames.push_back(newGame);
-
-    //// developer heap
-    // if the genre doesnt exist yet:
-    if (developerHeaps.find(newGame.get_developer()) == developerHeaps.end()) {
-        maxHeap newHeap("recommendations");
-        developerHeaps.insert({newGame.get_developer(), newHeap});
-    }
-    // add new game:
-    developerHeaps[newGame.get_developer()].insert(newGame);
-
-    //// publisher heap
-    if (publisherHeaps.find(newGame.get_publisher()) == publisherHeaps.end()) {
-        maxHeap newHeap("recommendations");
-        publisherHeaps.insert({newGame.get_publisher(), newHeap});
-    }
-    publisherHeaps[newGame.get_publisher()].insert(newGame);
-
-    //// genre heaps
-    for (string genre:newGame.get_genres()) {
-        if (genreHeaps.find(genre) == genreHeaps.end()) {
-            maxHeap newHeap("recommendations");
-            genreHeaps.insert({genre, newHeap});
-        }
-        genreHeaps[genre].insert(newGame);
-    }
-
-    //// category heaps
-    for (string category : newGame.get_categories()) {
-
-        if (categoryHeaps.find(category) == categoryHeaps.end()) {
-            maxHeap newHeap("recommendations");
-            categoryHeaps.insert({ category, newHeap });
-        }
-        categoryHeaps[category].insert(newGame);
-    }
 };
