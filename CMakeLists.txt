@@ -19,3 +19,4 @@ add_executable(dsa
 
 target_compile_features(dsa PRIVATE cxx_std_17)
 target_link_libraries(dsa PRIVATE SFML::Graphics)
+configure_file(BoldPixels.ttf ${CMAKE_CURRENT_BINARY_DIR}/BoldPixels.ttf COPYONLY)
