@@ -1,65 +1,43 @@
 #ifndef DSA_HEAP_H
 #define DSA_HEAP_H
-// my added includes 
+
+// my includes:
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <unordered_map>
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
+
+#include "gameInfo.h"
+
+// namespace <3
 using namespace std;
 
-// making games class
-class game {
-private:
-	// numbers: 
-	int appid;
-	double price;
-	int recommendations;
 
-	// one iterm strings
-	std::string title;
-	std::string developer;
-	std::string publisher;
-
-	// multiple adjectives 
-	std::vector<std::string> genres;
-	std::vector<std::string> catagories;
-
-public:
-	// constructors: 
-	game();
-	game(int appid, double price, int recommendations, const std::string& title, const std::string& developer, const std::string& publisher, const std::vector<std::string>& genres, const std::vector<std::string>& catagories);
-
-	// getting numbers: 
-	int get_appid() const;
-	double get_price() const;
-	int get_recomendations() const;
-
-	// getting one iterm strings
-	std::string get_title() const;
-	std::string get_developer() const;
-	std::string get_publisher() const;
-
-	// getting multiple adjectives 
-	std::vector<std::string> get_genres() const;
-	std::vector<std::string> get_catagories() const;
-};
-
+/////////////////////// max heap ////////////////////////////// 
 // making max heap
 class maxHeap {
 private:
-	std::vector<game*> heap;
+	vector<game> heap;
 
 	// nodes:
 	int parent(int index);
-	int right(int index);  // these are right/left children i just dont want to write kid
+	int right(int index);
 	int left(int index);
 
-	// sorting the heap
+	// chosing what type of data want to make a heap out of 
+	string infoNeeded;
+
+	// sorting the heap/heapify
 	void heapUp(int index);
 	void heapDown(int index);
 
 public:
 	//constructors: 
 	maxHeap();
+	maxHeap(string infoNeeded);
 
 	// funcs:
 	void insert(game newGame);
@@ -67,25 +45,31 @@ public:
 	game top();
 	bool empty();
 	int size();
+	double getInfo(game currentGame);
 
 };
 
+/////////////////////// min heap ////////////////////////////// 
 // making min heap 
 class minHeap {
 private:
-	std::vector<game*> heap;
+	vector<game> heap;
 
 	// nodes:
 	int parent(int index);
-	int right(int index); // these are right/left children i just dont want to write kid
+	int right(int index);
 	int left(int index);
 
-	// sorting the heap
+	// chosing what type of data want to make a heap out of 
+	string infoNeeded;
+
+	// sorting the heap/heapify
 	void heapUp(int index);
 	void heapDown(int index);
+
 public:
 	//constructors: 
-	minHeap();
+	minHeap(string infoNeeded);
 
 	// funcs:
 	void insert(game newGame);
@@ -93,7 +77,8 @@ public:
 	game top();
 	bool empty();
 	int size();
-
+	double getInfo(game currentGame);
 };
 
-#endif //DSA_HEAP_H#pragma once
+
+#endif //DSA_HEAP_H

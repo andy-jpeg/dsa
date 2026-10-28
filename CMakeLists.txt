@@ -15,7 +15,12 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(dsa
         main.cpp
-        Heap.cpp)
+        gameInfo.cpp
+        gameData.cpp
+        csvreader.cpp
+        Heap.cpp
+        HeapSort.cpp
+        MergeSort.cpp)
 
 target_compile_features(dsa PRIVATE cxx_std_17)
 target_link_libraries(dsa PRIVATE SFML::Graphics)
