@@ -1,6 +1,5 @@
 // adding header
-#include "heap.h"
-#include "gameinfo.h"
+#include "Heap.h"
 
 
 /////////////////////// max heap ////////////////////////////// 

@@ -11,7 +11,6 @@
 #include <stdexcept>
 
 #include "gameInfo.h"
-#include "csvreader.h"
 
 // namespace <3
 using namespace std;

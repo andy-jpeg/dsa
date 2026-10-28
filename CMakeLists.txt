@@ -15,6 +15,9 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(dsa
         main.cpp
+        gameInfo.cpp
+        gameData.cpp
+        csvreader.cpp
         Heap.cpp
         HeapSort.cpp
         MergeSort.cpp)
