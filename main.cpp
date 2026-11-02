@@ -1,45 +1,105 @@
 #include <iostream>
-#include <fstream>
 #include <SFML/Graphics.hpp>
 #include "Heap.h"
+#include "TextBox.h"
+#include "InputTextBox.h"
+#include "Dropdown.h"
+
 using namespace std;
-
-#include <bits/stdc++.h>
-
-void setText(sf::Text &text, float x, float y) {
-
-}
 
 int main () {
     sf::Font font("../BoldPixels.ttf");
 
     // variables for visuals:
+    unsigned int width = 1024;
+    unsigned int height = 712;
+
     sf::Color bgGrey(76, 69, 76);
     sf::Color lightPink(255, 192, 222);
     sf::Color pink(237, 150, 215);
     sf::Color lightPurple(163, 69, 161);
+    sf::Color blank(0,0,0,0);
 
-    sf::Text titleText(font);
-    titleText.setString("Pick a game");
-    titleText.setCharacterSize(36);
-    titleText.setFillColor(lightPurple);
-    titleText.setStyle(sf::Text::Bold);
+    TextBox groupName(width / 2.0f, 65.f, 36, 0, 0, "SAC-RELIGIOUS PRODUCTIONS", font, lightPurple, blank, blank);
+    TextBox titleText((width - 440.f) / 2.0f, 125.f, 60, 440, 60.f, "Pick a game", font, lightPurple,pink, lightPurple);
+    TextBox credits(width / 2.0f, 670.f, 24, 0, 0, "Sara Mann, Camryn Walter, Andy Tran @ 2026", font, lightPurple, blank, blank);
+
+    float W = 440.f;
+    float H = 48.f;
+    float X = (width - W) / 2.0f;
+
+    Dropdown costDropdown(X, 245.f, 24, W, H, "MONEY", {"Free", "< $10", "< $30", "< $50", "< $70", "< $90"}, font, lightPink, pink, lightPurple);
+    Dropdown descriptionDropdown(X, 345.f, 24, W, H, "DESCRIPTION", {"Action", "Indie", "RPG", "Strategy", "Multiplayer", "Causal"}, font, lightPink, pink, lightPurple);
+    InputTextBox companyDropdown(X, 445.f, 24, W, H, "COMPANY", font, lightPink, pink, lightPurple, false);
+    InputTextBox numGames(X, 545.f, 24, W, H, "HOW MANY", font, lightPink, pink, lightPurple, true);
+    vector<TextBox*> uiElements = {&groupName, &titleText, &credits, &costDropdown, &descriptionDropdown, &companyDropdown, &numGames};
 
     // creating main window frame
-    sf::RenderWindow homeWindow(sf::VideoMode({800, 600}), "Pick a game");
+    sf::RenderWindow homeWindow(sf::VideoMode({width, height}), "Pick a game");
     while (homeWindow.isOpen()) {
-
-        // home window visuals
-        homeWindow.clear(bgGrey);
-        homeWindow.draw(titleText);
-        homeWindow.display();
 
         while (const optional event = homeWindow.pollEvent()) {
             // ONLY close when if x is pressed
             if (event->is <sf::Event::Closed>()) {
                 homeWindow.close();
             }
+
+            for (auto* elem: uiElements) {
+                elem->handleEvent(*event, homeWindow);
+            }
+
+            if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {
+                    bool allInputsFilled = true;
+                    std::vector<std::string> collectedInputs;
+
+                    // checking  InputTextBoxes for input
+                    for (auto* elem : uiElements) {
+                        if (auto* inputBx = dynamic_cast<InputTextBox*>(elem)) {
+                            std::string val = inputBx->getInput();
+
+                            if (val.empty()) {
+                                allInputsFilled = false;
+                                break; // Stop checking if any field is missing input
+                            }
+                            collectedInputs.push_back(val);
+                        }
+                    }
+
+                    // if all textboxes are filled, the program is closed and the lists are outputted!!
+                    // not completed yet, just a shell to see that the program works as intended
+                    if (allInputsFilled && !collectedInputs.empty()) {
+                        std::cout << "------------------------------------\n";
+                        for (size_t i = 0; i < collectedInputs.size(); ++i) {
+                            std::cout << "Input " << (i + 1) << ": " << collectedInputs[i] << "\n";
+                        }
+                        std::cout << "------------------------------------\n";
+
+                        homeWindow.close();
+                    } else {
+                        // warns user that they MUST fill in the text box!
+                        std::cout << "All input fields MUST be filled before pressing Enter!\n";
+                        homeWindow.close();
+                    }
+                }
+            }
         }
+        // home window visuals
+        homeWindow.clear(bgGrey);
+
+        // drawling all base UI components
+        for (auto* elem : uiElements) {
+            elem->draw(homeWindow);
+        }
+
+        // re-drawling ONLY the dropdown options so they are on top of everything else!
+        for (auto* elem : uiElements) {
+            if (auto* dropdown = dynamic_cast<Dropdown*>(elem)) {
+                dropdown->drawOpenListOnly(homeWindow);
+            }
+        }
+
+        homeWindow.display();
     }
 
     return 0;
