@@ -41,12 +41,15 @@ void InputTextBox::handleEvent(const sf::Event& event, const sf::RenderWindow& w
     if (const auto* mouseEvent = event.getIf<sf::Event::MouseButtonPressed>()) {
         if (mouseEvent->button == sf::Mouse::Button::Left) {
             sf::Vector2f mousePos = window.mapPixelToCoords({mouseEvent->position.x, mouseEvent->position.y});
+
             // if the box is clicked on its highlighted with a cursor!
             if (box.getGlobalBounds().contains(mousePos)) {
                 inUse = true;
                 box.setOutlineColor(sf::Color(220, 172, 220));
                 inputText.setString(userInput + "|");
-            } else {
+            }
+            // if the box is clicked off of its unhighlighted!
+            else {
                 inUse = false;
                 box.setOutlineColor(sf::Color(163, 69, 161));
                 inputText.setString(userInput);
@@ -61,9 +64,11 @@ void InputTextBox::handleEvent(const sf::Event& event, const sf::RenderWindow& w
                 if (!userInput.empty()) {
                     userInput.pop_back();
                     inputText.setString(userInput + "|");
-                } else {
+                }
+                else {
                     inputText.setString("|");
                 }
+
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {
                 inUse = false;
@@ -71,6 +76,7 @@ void InputTextBox::handleEvent(const sf::Event& event, const sf::RenderWindow& w
                 inputText.setString(userInput);
             }
         }
+
         else if (const auto* textEntered = event.getIf<sf::Event::TextEntered>()) {
             unsigned int unicode = textEntered->unicode;
             // specifically for the number of games
@@ -81,9 +87,10 @@ void InputTextBox::handleEvent(const sf::Event& event, const sf::RenderWindow& w
                     inputText.setString(userInput + "|");
                 }
             }
+
             else {
                 // specifically for company name
-                // max limit set on name length
+                // max limit set on name length (999)
                 if ((isalpha(static_cast<unsigned char>(unicode)) || unicode == ' ') && userInput.size() < 1000) {
                     userInput.push_back(static_cast<char>(unicode));
                     inputText.setString(userInput + "|");

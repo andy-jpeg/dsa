@@ -1,6 +1,9 @@
 #include <iostream>
+#include <vector>
 #include <SFML/Graphics.hpp>
 #include "Heap.h"
+#include "Heapsort.h"
+#include "MergeSort.h"
 #include "TextBox.h"
 #include "InputTextBox.h"
 #include "Dropdown.h"
@@ -12,16 +15,26 @@
 using namespace std;
 
 int main () {
+<<<<<<< Updated upstream
     // loading the info:
     CSVReader reader;
     gameData data;
     reader.loadCSV("gamedatabase.csv", data);
 
     sf::Font font("../BoldPixels.ttf");
+=======
+    // variables for heaps:
+    string cost;
+    string genre;
+    string company;
+    string games;
+>>>>>>> Stashed changes
 
     // variables for visuals:
     unsigned int width = 1024;
     unsigned int height = 712;
+
+    sf::Font font("../BoldPixels.ttf");
 
     sf::Color bgGrey(76, 69, 76);
     sf::Color lightPink(255, 192, 222);
@@ -69,7 +82,7 @@ int main () {
 
                             if (val.empty()) {
                                 allInputsFilled = false;
-                                break; // Stop checking if any field is missing input
+                                break;
                             }
                             collectedInputs.push_back(val);
                         }
@@ -78,6 +91,16 @@ int main () {
                     // if all textboxes are filled, the program is closed and the lists are outputted!!
                     // not completed yet, just a shell to see that the program works as intended
                     if (allInputsFilled && !collectedInputs.empty()) {
+                        cost = collectedInputs[0];
+                        genre = collectedInputs[1];
+                        company = collectedInputs[2];
+                        games = collectedInputs[3];
+
+                        maxHeap costHeap(cost);
+                        maxHeap genreHeap(genre);
+                        maxHeap companyHeap(company);
+                        maxHeap numGamestHeap(games);
+
                         std::cout << "------------------------------------\n";
                         for (size_t i = 0; i < collectedInputs.size(); ++i) {
                             std::cout << "Input " << (i + 1) << ": " << collectedInputs[i] << "\n";

@@ -6,7 +6,7 @@
 using namespace std;
 
 class Dropdown : public InputTextBox {
-private:
+protected:
     std::vector<std::string> options;
     std::vector<sf::RectangleShape> optionBoxes;
     std::vector<sf::Text> optionTexts;
