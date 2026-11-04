@@ -26,5 +26,8 @@ add_executable(dsa
         Dropdown.cpp)
 
 target_compile_features(dsa PRIVATE cxx_std_17)
+
+# project folder path, so the csv + font load no matter where it runs from
+target_compile_definitions(dsa PRIVATE PROJECT_DIR="${CMAKE_SOURCE_DIR}/")
 target_link_libraries(dsa PRIVATE SFML::Graphics)
 

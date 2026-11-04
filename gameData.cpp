@@ -1,5 +1,6 @@
 // adding header
 #include "gameData.h"
+#include "HeapSort.h"
 
 /////////////////////// data heaps ////////////////////////////// 
 // creating a filter of all of the games, if they are matching what they want it will go in the new list:

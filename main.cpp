@@ -18,7 +18,7 @@ int main () {
     // loading the info:
     CSVReader reader;
     gameData data;
-    reader.loadCSV("gamedatabase.csv", data);
+    reader.loadCSV(string(PROJECT_DIR) + "gamedatabase.csv", data);
     
     // variables for heaps:
     string cost;
@@ -30,7 +30,7 @@ int main () {
     unsigned int width = 1024;
     unsigned int height = 712;
 
-    sf::Font font("../BoldPixels.ttf");
+    sf::Font font(string(PROJECT_DIR) + "BoldPixels.ttf");
 
     sf::Color bgGrey(76, 69, 76);
     sf::Color lightPink(255, 192, 222);

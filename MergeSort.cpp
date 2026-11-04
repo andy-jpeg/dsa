@@ -31,11 +31,11 @@ void mergeSorter::merge(vector<game>& games, vector<game>& temp, int left, int m
     while (i <= mid && j <= right) {
         // <= keeps tied games in og order (stable)
         if (getInfo(games[i]) <= getInfo(games[j])) {
-            temp[spot] = move(games[i]);
+            temp[spot] = std::move(games[i]);
             i++;
         }
         else {
-            temp[spot] = move(games[j]);
+            temp[spot] = std::move(games[j]);
             j++;
         }
         spot++;
@@ -43,19 +43,19 @@ void mergeSorter::merge(vector<game>& games, vector<game>& temp, int left, int m
 
     // leftovers
     while (i <= mid) {
-        temp[spot] = move(games[i]);
+        temp[spot] = std::move(games[i]);
         i++;
         spot++;
     }
     while (j <= right) {
-        temp[spot] = move(games[j]);
+        temp[spot] = std::move(games[j]);
         j++;
         spot++;
     }
 
     // copy back
     for (int x = left; x <= right; x++) {
-        games[x] = move(temp[x]);
+        games[x] = std::move(temp[x]);
     }
 };
 
