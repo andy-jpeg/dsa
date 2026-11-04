@@ -35,6 +35,9 @@ private:
 	void heapDown(int index);
 
 public:
+	// going to be used to implement the maps, so only sort games that fit catagory
+	vector<game> getHeap() const;
+
 	//constructors: 
 	maxHeap();
 	maxHeap(string infoNeeded);
@@ -45,7 +48,7 @@ public:
 	game top();
 	bool empty();
 	int size();
-	double getInfo(game currentGame);
+	double getInfo(const game& currentGame);
 
 };
 
@@ -77,7 +80,7 @@ public:
 	game top();
 	bool empty();
 	int size();
-	double getInfo(game currentGame);
+	double getInfo(const game& currentGame);
 };
 
 
