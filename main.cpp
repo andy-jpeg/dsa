@@ -15,20 +15,16 @@
 using namespace std;
 
 int main () {
-<<<<<<< Updated upstream
     // loading the info:
     CSVReader reader;
     gameData data;
     reader.loadCSV("gamedatabase.csv", data);
-
-    sf::Font font("../BoldPixels.ttf");
-=======
+    
     // variables for heaps:
     string cost;
     string genre;
     string company;
     string games;
->>>>>>> Stashed changes
 
     // variables for visuals:
     unsigned int width = 1024;
