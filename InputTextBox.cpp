@@ -88,14 +88,15 @@ void InputTextBox::handleEvent(const sf::Event& event, const sf::RenderWindow& w
                 }
             }
 
-            else {
-                // specifically for company name
-                // max limit set on name length (999)
-                if ((isalpha(static_cast<unsigned char>(unicode)) || unicode == ' ') && userInput.size() < 1000) {
-                    userInput.push_back(static_cast<char>(unicode));
-                    inputText.setString(userInput + "|");
-                }
-            }
+            // back when we had company name as an attribute !!
+            // else {
+            //     // specifically for company name
+            //     // max limit set on name length (999)
+            //     if ((isalpha(static_cast<unsigned char>(unicode)) || unicode == ' ') && userInput.size() < 1000) {
+            //        userInput.push_back(static_cast<char>(unicode));
+            //         inputText.setString(userInput + "|");
+            //     }
+            // }
         }
     }
 }

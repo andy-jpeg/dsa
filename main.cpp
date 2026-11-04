@@ -49,10 +49,13 @@ int main () {
     float X = (width - W) / 2.0f;
 
     Dropdown costDropdown(X, 245.f, 24, W, H, "MONEY", {"Free", "< $10", "< $30", "< $50", "< $70", "< $90"}, font, lightPink, pink, lightPurple);
-    Dropdown descriptionDropdown(X, 345.f, 24, W, H, "DESCRIPTION", {"Action", "Indie", "RPG", "Strategy", "Multiplayer", "Casual"}, font, lightPink, pink, lightPurple);
-    InputTextBox companyDropdown(X, 445.f, 24, W, H, "COMPANY", font, lightPink, pink, lightPurple, false);
-    InputTextBox numGames(X, 545.f, 24, W, H, "HOW MANY", font, lightPink, pink, lightPurple, true);
-    vector<TextBox*> uiElements = {&groupName, &titleText, &credits, &costDropdown, &descriptionDropdown, &companyDropdown, &numGames};
+    Dropdown genreDropdown(X, 345.f, 24, W, H, "GENRE", {"Action", "Indie", "RPG", "Strategy", "Multiplayer", "Casual"}, font, lightPink, pink, lightPurple);
+
+    // old input we had that we decided to remove
+    // InputTextBox companyDropdown(X, 445.f, 24, W, H, "COMPANY", font, lightPink, pink, lightPurple, false);
+
+    InputTextBox numGames(X, 445.f, 24, W, H, "HOW MANY", font, lightPink, pink, lightPurple, true);
+    vector<TextBox*> uiElements = {&groupName, &titleText, &credits, &costDropdown, &genreDropdown, &numGames};
 
     // creating main window frame
     sf::RenderWindow homeWindow(sf::VideoMode({width, height}), "Pick a game");
@@ -91,12 +94,11 @@ int main () {
                     if (allInputsFilled && !collectedInputs.empty()) {
                         cost = collectedInputs[0];
                         genre = collectedInputs[1];
-                        company = collectedInputs[2];
-                        games = collectedInputs[3];
+                        games = collectedInputs[2];
 
-                        // turning the inputs into filters:
-                        // cost dropdown -> max price ("< $10" -> 10)
-                        double maxPrice = (cost == "Free") ? 0 : stod(cost.substr(3));
+                        maxHeap costHeap(cost);
+                        maxHeap genreHeap(genre);
+                        maxHeap numGamestHeap(games);
 
                         // "Multiplayer" is a category in the data, the rest are genres
                         string category = "";
