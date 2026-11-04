@@ -5,9 +5,18 @@
 #include "InputTextBox.h"
 #include "Dropdown.h"
 
+// for data:
+#include "csvreader.h"
+#include "gameData.h"
+
 using namespace std;
 
 int main () {
+    // loading the info:
+    CSVReader reader;
+    gameData data;
+    reader.loadCSV("gamedatabase.csv", data);
+
     sf::Font font("../BoldPixels.ttf");
 
     // variables for visuals:
@@ -29,7 +38,7 @@ int main () {
     float X = (width - W) / 2.0f;
 
     Dropdown costDropdown(X, 245.f, 24, W, H, "MONEY", {"Free", "< $10", "< $30", "< $50", "< $70", "< $90"}, font, lightPink, pink, lightPurple);
-    Dropdown descriptionDropdown(X, 345.f, 24, W, H, "DESCRIPTION", {"Action", "Indie", "RPG", "Strategy", "Multiplayer", "Causal"}, font, lightPink, pink, lightPurple);
+    Dropdown descriptionDropdown(X, 345.f, 24, W, H, "DESCRIPTION", {"Action", "Indie", "RPG", "Strategy", "Multiplayer", "Casual"}, font, lightPink, pink, lightPurple);
     InputTextBox companyDropdown(X, 445.f, 24, W, H, "COMPANY", font, lightPink, pink, lightPurple, false);
     InputTextBox numGames(X, 545.f, 24, W, H, "HOW MANY", font, lightPink, pink, lightPurple, true);
     vector<TextBox*> uiElements = {&groupName, &titleText, &credits, &costDropdown, &descriptionDropdown, &companyDropdown, &numGames};
