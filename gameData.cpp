@@ -5,28 +5,61 @@
 // creating a filter of all of the games, if they are matching what they want it will go in the new list:
 vector<game> gameData::filterGames(string publisher, string genre, string category, double maxPrice) {
     // creating a vector for the games that fit
+    vector<game> tryGames;
+
+    //making a shorter list of games that they have to sort through, going to heap for games that match
+    // if has all things -> getting the heap that correlates with the catagory
+    if (!publisher.empty() && (publisherHeaps.find(publisher) != publisherHeaps.end())) {
+        tryGames = publisherHeaps[publisher].getHeap();
+    }
+    else if (!genre.empty() && (genreHeaps.find(genre) != genreHeaps.end())) {
+        tryGames = genreHeaps[genre].getHeap();
+    }
+    else if (!category.empty() && (categoryHeaps.find(category) != categoryHeaps.end())) {
+        tryGames = categoryHeaps[category].getHeap();
+    }
+    else {
+       tryGames = allGames;
+    }
+
+    // now that we have the heap with games we need to make sure that it fits the other wants, 
     vector<game> matchingGames;
 
-    for (const game& currentGame : allGames) {
-        // if has all things: 
-        if (!publisher.empty() && currentGame.get_publisher() != publisher) {
-            continue;
-        }
+    for (const game& currentGame : tryGames) {
         if (currentGame.get_price() > maxPrice) {
             continue;
         }
+
+        // making sure it is the right genre/catagory: 
         vector<string> genres = currentGame.get_genres();
-        if (!genre.empty() && find(genres.begin(), genres.end(), genre) == genres.end()) {
-            continue;
-        }
         vector<string> categories = currentGame.get_categories();
-        if (!category.empty() && find(categories.begin(), categories.end(), category) == categories.end()) {
+
+        if (!genre.empty() && (find(genres.begin(), genres.end(), genre) == genres.end())) {
             continue;
         }
+        if (!category.empty() && (find(categories.begin(), categories.end(), category) == categories.end())) {
+            continue;
+        }
+
+        // add game:
         matchingGames.push_back(currentGame);
     }
+
     return matchingGames;
 };
+
+
+// filtering through the games and getting only the top num of games that the person asked for:
+vector<game> gameData::recommendGames(string publisher, string genre, string category, double maxPrice, int k) {
+    // getting the heaps from filtering:
+    vector<game> matchingGames = filterGames(publisher, genre, category, maxPrice);
+    
+    // sort them in the heap
+    heapSorter sorter("recommendations");
+     
+    return sorter.topK(matchingGames, k);
+}
+
 
 // adding new games to the heaps/ with correct data 
 void gameData::addGame(game newGame) {
@@ -71,4 +104,3 @@ void gameData::addGame(game newGame) {
         categoryHeaps[category].insert(newGame);
     }
 };
-
