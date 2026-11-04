@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <SFML/Graphics.hpp>
 #include "Heap.h"
-#include "Heapsort.h"
+#include "HeapSort.h"
 #include "MergeSort.h"
 #include "TextBox.h"
 #include "InputTextBox.h"
@@ -48,7 +48,7 @@ int main () {
     float H = 48.f;
     float X = (width - W) / 2.0f;
 
-    Dropdown costDropdown(X, 245.f, 24, W, H, "MONEY", {"Free", "< $10", "< $30", "< $50", "< $70", "< $90"}, font, lightPink, pink, lightPurple);
+    Dropdown costDropdown(X, 245.f, 24, W, H, "MONEY", {"Free", "$1 - $10", "$10 - $30", "$30 - $50", "$50 - $70", "$70 - $90", "> $90"}, font, lightPink, pink, lightPurple);
     Dropdown genreDropdown(X, 345.f, 24, W, H, "GENRE", {"Action", "Indie", "RPG", "Strategy", "Multiplayer", "Casual"}, font, lightPink, pink, lightPurple);
 
     // old input we had that we decided to remove
@@ -96,9 +96,14 @@ int main () {
                         genre = collectedInputs[1];
                         games = collectedInputs[2];
 
-                        maxHeap costHeap(cost);
-                        maxHeap genreHeap(genre);
-                        maxHeap numGamestHeap(games);
+                        // cost dropdown -> price range: above minPrice, up to maxPrice
+                        double minPrice = -1, maxPrice = 0;    // "Free" -> only $0 games
+                        if (cost == "$1 - $10")       { minPrice = 0;  maxPrice = 10; }
+                        else if (cost == "$10 - $30") { minPrice = 10; maxPrice = 30; }
+                        else if (cost == "$30 - $50") { minPrice = 30; maxPrice = 50; }
+                        else if (cost == "$50 - $70") { minPrice = 50; maxPrice = 70; }
+                        else if (cost == "$70 - $90") { minPrice = 70; maxPrice = 90; }
+                        else if (cost == "> $90")     { minPrice = 90; maxPrice = 1e9; }
 
                         // "Multiplayer" is a category in the data, the rest are genres
                         string category = "";
@@ -109,7 +114,12 @@ int main () {
                         int k = stoi(games);
 
                         // same games go into both algorithms
-                        vector<game> matches = data.filterGames(company, genre, category, maxPrice);
+                        vector<game> matches;
+                        for (const game& g : data.filterGames(company, genre, category, maxPrice)) {
+                            if (g.get_price() > minPrice) {
+                                matches.push_back(g);
+                            }
+                        }
                         heapSorter heapS("recommendations");
                         mergeSorter mergeS("recommendations");
                         vector<game> heapTop, mergeTop;
@@ -137,11 +147,10 @@ int main () {
                             cout << "  " << (i + 1) << ". " << heapTop[i].get_title() << " (" << heapTop[i].get_recommendations() << " recs, $" << heapTop[i].get_price() << ")\n";
                         }
                         if (heapTop.empty()) {
-                            cout << "  no games found (company has to match exactly)\n";
+                            cout << "  no games found\n";
                         }
                         cout << "\nheap sort:  " << heapMs << " ms\n";
                         cout << "merge sort: " << mergeMs << " ms\n";
-                        cout << (heapMs < mergeMs ? "heap" : "merge") << " sort was " << max(heapMs, mergeMs) / max(min(heapMs, mergeMs), 0.0001) << "x faster\n";
                         cout << "------------------------------------\n";
 
                         homeWindow.close();
