@@ -4,16 +4,13 @@
 
 /////////////////////// data heaps ////////////////////////////// 
 // creating a filter of all of the games, if they are matching what they want it will go in the new list:
-vector<game> gameData::filterGames(string publisher, string genre, string category, double maxPrice) {
+vector<game> gameData::filterGames(string genre, string category, double maxPrice) {
     // creating a vector for the games that fit
     vector<game> tryGames;
 
     //making a shorter list of games that they have to sort through, going to heap for games that match
-    // if has all things -> getting the heap that correlates with the catagory
-    if (!publisher.empty() && (publisherHeaps.find(publisher) != publisherHeaps.end())) {
-        tryGames = publisherHeaps[publisher].getHeap();
-    }
-    else if (!genre.empty() && (genreHeaps.find(genre) != genreHeaps.end())) {
+    // if has all things -> getting the heap that correlates with the cateagory
+    if (!genre.empty() && (genreHeaps.find(genre) != genreHeaps.end())) {
         tryGames = genreHeaps[genre].getHeap();
     }
     else if (!category.empty() && (categoryHeaps.find(category) != categoryHeaps.end())) {
@@ -51,9 +48,9 @@ vector<game> gameData::filterGames(string publisher, string genre, string catego
 
 
 // filtering through the games and getting only the top num of games that the person asked for:
-vector<game> gameData::recommendGames(string publisher, string genre, string category, double maxPrice, int k) {
+vector<game> gameData::recommendGames(string genre, string category, double maxPrice, int k) {
     // getting the heaps from filtering:
-    vector<game> matchingGames = filterGames(publisher, genre, category, maxPrice);
+    vector<game> matchingGames = filterGames(genre, category, maxPrice);
     
     // sort them in the heap
     heapSorter sorter("recommendations");
@@ -75,13 +72,6 @@ void gameData::addGame(game newGame) {
     }
     // add new game:
     developerHeaps[newGame.get_developer()].insert(newGame);
-
-    //// publisher heap
-    if (publisherHeaps.find(newGame.get_publisher()) == publisherHeaps.end()) {
-        maxHeap newHeap("recommendations");
-        publisherHeaps.insert({ newGame.get_publisher(), newHeap });
-    }
-    publisherHeaps[newGame.get_publisher()].insert(newGame);
 
     //// genre heaps
     vector<string> genres = newGame.get_genres();
