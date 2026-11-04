@@ -21,7 +21,6 @@ private:
 	// heaps for each cataporgy 
 	unordered_map<string, maxHeap> genreHeaps;
 	unordered_map<string, maxHeap> developerHeaps;
-	unordered_map<string, maxHeap> publisherHeaps;
 	unordered_map<string, maxHeap> categoryHeaps;
 
 public:
@@ -29,10 +28,10 @@ public:
 	void addGame(game newGame);
 
 	// starts with all games, then it filters based on if it fits what they want 
-	vector<game> filterGames(string publisher, string genre, string category, double maxPrice);
+	vector<game> filterGames(string genre, string category, double maxPrice);
 	
 	// getting num game recomendations:
-	vector<game> recommendGames(string publisher, string genre, string category, double maxPrice, int k);
+	vector<game> recommendGames(string genre, string category, double maxPrice, int k);
 };
 
 
