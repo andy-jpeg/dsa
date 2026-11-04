@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <algorithm>
 #include <SFML/Graphics.hpp>
 #include "Heap.h"
 #include "Heapsort.h"
@@ -92,16 +94,53 @@ int main () {
                         company = collectedInputs[2];
                         games = collectedInputs[3];
 
-                        maxHeap costHeap(cost);
-                        maxHeap genreHeap(genre);
-                        maxHeap companyHeap(company);
-                        maxHeap numGamestHeap(games);
+                        // turning the inputs into filters:
+                        // cost dropdown -> max price ("< $10" -> 10)
+                        double maxPrice = (cost == "Free") ? 0 : stod(cost.substr(3));
 
-                        std::cout << "------------------------------------\n";
-                        for (size_t i = 0; i < collectedInputs.size(); ++i) {
-                            std::cout << "Input " << (i + 1) << ": " << collectedInputs[i] << "\n";
+                        // "Multiplayer" is a category in the data, the rest are genres
+                        string category = "";
+                        if (genre == "Multiplayer") {
+                            category = "Multi-player";
+                            genre = "";
                         }
-                        std::cout << "------------------------------------\n";
+                        int k = stoi(games);
+
+                        // same games go into both algorithms
+                        vector<game> matches = data.filterGames(company, genre, category, maxPrice);
+                        heapSorter heapS("recommendations");
+                        mergeSorter mergeS("recommendations");
+                        vector<game> heapTop, mergeTop;
+
+                        // timing each one (best of 5 so the numbers dont jump around)
+                        double heapMs = 1e9, mergeMs = 1e9;
+                        for (int run = 0; run < 5; run++) {
+                            vector<game> heapCopy = matches;
+                            vector<game> mergeCopy = matches;
+
+                            auto t0 = chrono::steady_clock::now();
+                            heapTop = heapS.topK(heapCopy, k);
+                            auto t1 = chrono::steady_clock::now();
+                            mergeTop = mergeS.topK(mergeCopy, k);
+                            auto t2 = chrono::steady_clock::now();
+
+                            heapMs = min(heapMs, chrono::duration<double, milli>(t1 - t0).count());
+                            mergeMs = min(mergeMs, chrono::duration<double, milli>(t2 - t1).count());
+                        }
+
+                        // printing results
+                        cout << "------------------------------------\n";
+                        cout << matches.size() << " games matched, top " << k << ":\n";
+                        for (int i = 0; i < heapTop.size(); i++) {
+                            cout << "  " << (i + 1) << ". " << heapTop[i].get_title() << " (" << heapTop[i].get_recommendations() << " recs, $" << heapTop[i].get_price() << ")\n";
+                        }
+                        if (heapTop.empty()) {
+                            cout << "  no games found (company has to match exactly)\n";
+                        }
+                        cout << "\nheap sort:  " << heapMs << " ms\n";
+                        cout << "merge sort: " << mergeMs << " ms\n";
+                        cout << (heapMs < mergeMs ? "heap" : "merge") << " sort was " << max(heapMs, mergeMs) / max(min(heapMs, mergeMs), 0.0001) << "x faster\n";
+                        cout << "------------------------------------\n";
 
                         homeWindow.close();
                     } else {

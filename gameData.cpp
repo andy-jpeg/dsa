@@ -27,6 +27,9 @@ vector<game> gameData::filterGames(string publisher, string genre, string catego
     vector<game> matchingGames;
 
     for (const game& currentGame : tryGames) {
+        if (!publisher.empty() && currentGame.get_publisher() != publisher) {
+            continue;
+        }
         if (currentGame.get_price() > maxPrice) {
             continue;
         }
