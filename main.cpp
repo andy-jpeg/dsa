@@ -141,12 +141,7 @@ int main () {
                         }
 
                         // printing results
-                        cout << "------------------- HEAP SORT -------------------\n";
-                        cout << matches.size() << " games matched, top " << k << ":\n";
-                        for (int i = 0; i < heapTop.size(); i++) {
-                            cout << "  " << (i + 1) << ". " << heapTop[i].get_title() << " (" << heapTop[i].get_recommendations() << " recs, $" << heapTop[i].get_price() << ")\n";
-                        }
-                        cout << "\n------------------- MERGE SORT -------------------\n";
+                        cout << "------------------------------------\n";
                         cout << matches.size() << " games matched, top " << k << ":\n";
                         for (int i = 0; i < heapTop.size(); i++) {
                             cout << "  " << (i + 1) << ". " << heapTop[i].get_title() << " (" << heapTop[i].get_recommendations() << " recs, $" << heapTop[i].get_price() << ")\n";
@@ -154,10 +149,9 @@ int main () {
                         if (heapTop.empty()) {
                             cout << "  no games found\n";
                         }
-                        cout << "\n------------------ SORTING TIMES -----------------";
-                        cout << "\nHeap Sort:  " << heapMs << " ms\n";
-                        cout << "Merge Sort: " << mergeMs << " ms\n";
-                        cout << "--------------------------------------------------\n";
+                        cout << "\nheap sort:  " << heapMs << " ms\n";
+                        cout << "merge sort: " << mergeMs << " ms\n";
+                        cout << "------------------------------------\n";
 
                         homeWindow.close();
                     } else {
