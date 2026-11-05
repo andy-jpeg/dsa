@@ -115,7 +115,7 @@ int main () {
 
                         // same games go into both algorithms
                         vector<game> matches;
-                        for (const game& g : data.filterGames(company, genre, category, maxPrice)) {
+                        for (const game& g : data.filterGames(genre, category, maxPrice)) {
                             if (g.get_price() > minPrice) {
                                 matches.push_back(g);
                             }
