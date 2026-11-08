@@ -90,7 +90,6 @@ int main () {
                     }
 
                     // if all textboxes are filled, the program is closed and the lists are outputted!!
-                    // not completed yet, just a shell to see that the program works as intended
                     if (allInputsFilled && !collectedInputs.empty()) {
                         cost = collectedInputs[0];
                         genre = collectedInputs[1];
@@ -141,22 +140,29 @@ int main () {
                         }
 
                         // printing results
-                        cout << "------------------------------------\n";
+                        cout << "------------------- HEAP SORT -------------------\n";
                         cout << matches.size() << " games matched, top " << k << ":\n";
                         for (int i = 0; i < heapTop.size(); i++) {
+                            cout << "  " << (i + 1) << ". " << heapTop[i].get_title() << " (" << heapTop[i].get_recommendations() << " recs, $" << heapTop[i].get_price() << ")\n";
+                        }
+                        cout << "\n------------------- MERGE SORT -------------------\n";
+                        cout << matches.size() << " games matched, top " << k << ":\n";
+                        for (int i = 0; i < mergeTop.size(); i++) {
                             cout << "  " << (i + 1) << ". " << heapTop[i].get_title() << " (" << heapTop[i].get_recommendations() << " recs, $" << heapTop[i].get_price() << ")\n";
                         }
                         if (heapTop.empty()) {
                             cout << "  no games found\n";
                         }
-                        cout << "\nheap sort:  " << heapMs << " ms\n";
-                        cout << "merge sort: " << mergeMs << " ms\n";
-                        cout << "------------------------------------\n";
+                        cout << "\n------------------ SORTING TIMES -----------------";
+                        cout << "\nHeap Sort:  " << heapMs << " ms\n";
+                        cout << "Merge Sort: " << mergeMs << " ms\n";
+                        cout << "--------------------------------------------------\n";
 
                         homeWindow.close();
                     } else {
                         // warns user that they MUST fill in the text box!
-                        std::cout << "All input fields MUST be filled before pressing Enter!\n";
+                        std::cout << "Number of recommendations wanted MUST be filled"
+                                     " before pressing Enter!\n";
                         homeWindow.close();
                     }
                 }
